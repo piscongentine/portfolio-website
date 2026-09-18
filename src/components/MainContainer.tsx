@@ -6,6 +6,7 @@ import Cursor from "./Cursor";
 import Landing from "./Landing";
 import Navbar from "./Navbar";
 import SocialIcons from "./SocialIcons";
+import WebGLBoundary from "./WebGLBoundary";
 import WhatIDo from "./WhatIDo";
 import Work from "./Work";
 import setSplitText from "./utils/splitText";
@@ -44,9 +45,11 @@ const MainContainer = ({ children }: PropsWithChildren) => {
             <Career />
             <Work />
             {isDesktopView && (
-              <Suspense fallback={<div>Loading....</div>}>
-                <TechStack />
-              </Suspense>
+              <WebGLBoundary>
+                <Suspense fallback={<div>Loading....</div>}>
+                  <TechStack />
+                </Suspense>
+              </WebGLBoundary>
             )}
             <Contact />
           </div>

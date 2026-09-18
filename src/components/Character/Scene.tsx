@@ -27,11 +27,22 @@ const Scene = () => {
       const aspect = container.width / container.height;
       const scene = sceneRef.current;
 
-      const renderer = new THREE.WebGLRenderer({
-        alpha: true,
-        antialias: false,
-        powerPreference: "high-performance",
-      });
+      // Started before the renderer so the loading screen always has a
+      // progress source to drive it, even if WebGL creation fails below.
+      let progress = setProgress((value) => setLoading(value));
+
+      let renderer: THREE.WebGLRenderer;
+      try {
+        renderer = new THREE.WebGLRenderer({
+          alpha: true,
+          antialias: false,
+          powerPreference: "high-performance",
+        });
+      } catch (error) {
+        console.warn("3D character disabled: WebGL is unavailable.", error);
+        progress.clear();
+        return;
+      }
       renderer.setSize(container.width, container.height);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
       renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -51,7 +62,6 @@ const Scene = () => {
       const clock = new THREE.Clock();
 
       const light = setLighting(scene);
-      let progress = setProgress((value) => setLoading(value));
       const { loadCharacter } = setCharacter(renderer, scene, camera);
 
       loadCharacter().then((gltf) => {
