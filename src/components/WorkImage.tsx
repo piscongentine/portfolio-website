@@ -6,6 +6,7 @@ interface Props {
   alt?: string;
   video?: string;
   link?: string;
+  onOpen?: () => void;
 }
 
 const WorkImage = (props: Props) => {
@@ -28,7 +29,14 @@ const WorkImage = (props: Props) => {
         href={props.link}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={() => setIsVideo(false)}
+        onClick={(e) => {
+          if (props.onOpen) {
+            e.preventDefault();
+            props.onOpen();
+          }
+        }}
         target="_blank"
+        rel="noopener noreferrer"
         data-cursor={"disable"}
       >
         {props.link && (

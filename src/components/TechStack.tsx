@@ -11,18 +11,60 @@ import {
   RapierRigidBody,
 } from "@react-three/rapier";
 
-const textureLoader = new THREE.TextureLoader();
-const imageUrls = [
-  "/images/react2.webp",
-  "/images/next2.webp",
-  "/images/node2.webp",
-  "/images/express.webp",
-  "/images/mongo.webp",
-  "/images/mysql.webp",
-  "/images/typescript.webp",
-  "/images/javascript.webp",
+const techBadges = [
+  { label: "PY", color: "#3776ab" },
+  { label: "SQL", color: "#e0823d" },
+  { label: "C", color: "#5c6bc0" },
+  { label: "JAVA", color: "#f89820" },
+  { label: "GO", color: "#00add8" },
+  { label: "PD", color: "#150458" },
+  { label: "NP", color: "#4d77cf" },
+  { label: "SKL", color: "#f89939" },
+  { label: "XGB", color: "#2f9e44" },
+  { label: "LSTM", color: "#7c3aed" },
+  { label: "PROPHET", color: "#0072b1" },
+  { label: "ARIMA", color: "#ae3ec9" },
+  { label: "SARIMA", color: "#d6336c" },
+  { label: "CNN", color: "#1971c2" },
+  { label: "HOG", color: "#f08c00" },
+  { label: "TF", color: "#ff6f00" },
+  { label: "KERAS", color: "#d00000" },
+  { label: "OPENCV", color: "#5c940d" },
+  { label: "EDA", color: "#495057" },
+  { label: "PLT", color: "#11557c" },
+  { label: "GCP", color: "#4285f4" },
+  { label: "IBM", color: "#054ada" },
+  { label: "GIT", color: "#f4511e" },
+  { label: "JUPYTER", color: "#f37626" },
+  { label: "COLAB", color: "#f9ab00" },
+  { label: "NLP", color: "#9c36b5" },
+  { label: "REST", color: "#38a169" },
+  { label: "FIREBASE", color: "#ffca28" },
 ];
-const textures = imageUrls.map((url) => textureLoader.load(url));
+
+function createBadgeTexture(label: string, color: string) {
+  const size = 256;
+  const canvas = document.createElement("canvas");
+  canvas.width = size;
+  canvas.height = size;
+  const ctx = canvas.getContext("2d")!;
+  ctx.fillStyle = color;
+  ctx.beginPath();
+  ctx.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.fillStyle = "#ffffff";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  let fontSize = 64;
+  if (label.length > 2) fontSize = 46;
+  if (label.length > 4) fontSize = 34;
+  if (label.length > 6) fontSize = 28;
+  ctx.font = `700 ${fontSize}px Arial, sans-serif`;
+  ctx.fillText(label, size / 2, size / 2 + 4);
+  return new THREE.CanvasTexture(canvas);
+}
+
+const textures = techBadges.map((t) => createBadgeTexture(t.label, t.color));
 
 const sphereGeometry = new THREE.SphereGeometry(1, 28, 28);
 
@@ -35,7 +77,6 @@ type SphereProps = {
   scale: number;
   r?: typeof THREE.MathUtils.randFloatSpread;
   material: THREE.MeshPhysicalMaterial;
-  isActive: boolean;
 };
 
 function SphereGeo({
@@ -43,21 +84,20 @@ function SphereGeo({
   scale,
   r = THREE.MathUtils.randFloatSpread,
   material,
-  isActive,
 }: SphereProps) {
   const api = useRef<RapierRigidBody | null>(null);
 
   useFrame((_state, delta) => {
-    if (!isActive) return;
+    if (!api.current) return;
     delta = Math.min(0.1, delta);
     const impulse = vec
-      .copy(api.current!.translation())
+      .copy(api.current.translation())
       .normalize()
       .multiply(
         new THREE.Vector3(
-          -50 * delta * scale,
-          -150 * delta * scale,
-          -50 * delta * scale
+          -160 * delta * scale,
+          -320 * delta * scale,
+          -160 * delta * scale
         )
       );
 
@@ -69,7 +109,7 @@ function SphereGeo({
       linearDamping={0.75}
       angularDamping={0.15}
       friction={0.2}
-      position={[r(20), r(20) - 25, r(20) - 10]}
+      position={[r(14), r(14) - 8, r(14) - 6]}
       ref={api}
       colliders={false}
     >
@@ -172,6 +212,7 @@ const TechStack = () => {
 
       <Canvas
         shadows
+        dpr={[1, 1.5]}
         gl={{ alpha: true, stencil: false, depth: false, antialias: false }}
         camera={{ position: [0, 0, 20], fov: 32.5, near: 1, far: 100 }}
         onCreated={(state) => (state.gl.toneMappingExposure = 1.5)}
@@ -193,8 +234,7 @@ const TechStack = () => {
             <SphereGeo
               key={i}
               {...props}
-              material={materials[Math.floor(Math.random() * materials.length)]}
-              isActive={isActive}
+              material={materials[i % materials.length]}
             />
           ))}
         </Physics>

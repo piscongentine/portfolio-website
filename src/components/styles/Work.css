@@ -208,3 +208,160 @@
     height: auto;
   }
 }
+
+.work-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background-color: #0b080c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  box-sizing: border-box;
+}
+
+.work-modal {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  max-height: 85vh;
+  overflow-y: auto;
+  background-color: #141018;
+  border: 1px solid #2a2432;
+  border-radius: 18px;
+  padding: 40px;
+  box-sizing: border-box;
+}
+
+.work-modal-image {
+  width: 100%;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  display: block;
+}
+
+.work-modal h3 {
+  font-size: 28px;
+  margin: 0 0 4px;
+}
+
+.work-modal-category {
+  color: var(--accentColor);
+  margin: 0 0 20px;
+  font-size: 15px;
+}
+
+.work-modal-desc {
+  font-weight: 300;
+  line-height: 1.6;
+  margin: 0 0 24px;
+  color: #dcd8e2;
+}
+
+.work-modal h4 {
+  font-size: 15px;
+  font-weight: 400;
+  margin: 0 0 6px;
+  color: #adacac;
+}
+
+.work-modal > p {
+  margin: 0 0 24px;
+}
+
+.work-modal-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--accentColor);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.work-modal-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.work-modal-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  color: var(--accentColor);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 8px 0;
+}
+
+.work-modal-back svg {
+  font-size: 12px;
+}
+
+.work-modal-close {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid #2a2432;
+  background-color: #1f1a26;
+  color: #fff;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.work-modal-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid #2a2432;
+}
+
+.work-modal-nav button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #1f1a26;
+  border: 1px solid #2a2432;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 14px;
+  padding: 10px 16px;
+  cursor: pointer;
+}
+
+.work-modal-nav button svg {
+  font-size: 12px;
+}
+
+.work-modal-nav span {
+  color: #7a7580;
+  font-size: 13px;
+}
+
+@media only screen and (max-width: 600px) {
+  .work-modal {
+    padding: 24px;
+    border-radius: 14px;
+  }
+  .work-modal h3 {
+    font-size: 22px;
+  }
+  .work-modal-back span,
+  .work-modal-nav button {
+    font-size: 13px;
+  }
+  .work-modal-nav button {
+    padding: 8px 12px;
+  }
+}

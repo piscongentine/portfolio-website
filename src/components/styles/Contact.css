@@ -46,6 +46,81 @@ a.contact-social {
   gap: 10px;
   opacity: 0.5;
 }
+.contact-box h5.design-credit {
+  font-size: 14px;
+  font-weight: 400;
+  margin-top: 10px;
+}
+.contact-box h5.design-credit a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.copyright-bar {
+  position: relative;
+  margin-top: 70px;
+  padding-top: 26px;
+  border-top: 1px solid #211c29;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.copyright-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 260px;
+  height: 100px;
+  transform: translate(-50%, -50%) scale(0.9);
+  background: radial-gradient(
+    ellipse at center,
+    rgba(42, 243, 255, 0.4) 0%,
+    rgba(255, 42, 212, 0.22) 45%,
+    transparent 75%
+  );
+  filter: blur(20px);
+  animation: copyright-glow-pulse 3.4s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes copyright-glow-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: translate(-50%, -50%) scale(0.85);
+  }
+  50% {
+    opacity: 0.85;
+    transform: translate(-50%, -50%) scale(1.2);
+  }
+}
+
+.copyright-glitch-line {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 20px;
+  color: #cdc8d4;
+}
+.copyright-glitch-line svg {
+  color: #2af3ff;
+  filter: drop-shadow(0 0 4px rgba(42, 243, 255, 0.6));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .copyright-glow {
+    animation: none;
+    opacity: 0.5;
+  }
+}
+
 @media only screen and (max-width: 1600px) {
   .contact-section h3 {
     font-size: 50px;
