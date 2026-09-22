@@ -200,10 +200,13 @@ const TechStack = () => {
           map: texture,
           emissive: "#ffffff",
           emissiveMap: texture,
-          emissiveIntensity: 0.3,
-          metalness: 0.5,
-          roughness: 1,
-          clearcoat: 0.1,
+          // Low metalness + a strong emissive boost keeps the badge label
+          // readable even under weak/failed environment lighting, instead
+          // of the sphere reading as a near-black reflective ball.
+          emissiveIntensity: 0.6,
+          metalness: 0.18,
+          roughness: 0.55,
+          clearcoat: 0.05,
         })
     );
   }, []);
@@ -216,9 +219,31 @@ const TechStack = () => {
         <Canvas
           shadows
           dpr={[1, 1.5]}
-          gl={{ alpha: true, stencil: false, depth: false, antialias: false }}
+          gl={{ alpha: true, stencil: false, depth: true, antialias: false }}
           camera={{ position: [0, 0, 20], fov: 32.5, near: 1, far: 100 }}
-          onCreated={(state) => (state.gl.toneMappingExposure = 1.5)}
+          onCreated={(state) => {
+            state.gl.toneMappingExposure = 1.5;
+            // Same GPU-driver-crash recovery as the character canvas: a
+            // dropped context otherwise leaves the spheres black/blank
+            // until the visitor manually refreshes.
+            const canvas = state.gl.domElement;
+            canvas.addEventListener(
+              "webglcontextlost",
+              (event) => {
+                event.preventDefault();
+                console.warn("Tech stack: WebGL context lost (likely a GPU driver issue).");
+              },
+              false
+            );
+            canvas.addEventListener(
+              "webglcontextrestored",
+              () => {
+                console.warn("Tech stack: WebGL context restored, reloading to rebuild the scene.");
+                window.location.reload();
+              },
+              false
+            );
+          }}
           className="tech-canvas"
         >
           <ambientLight intensity={1} />

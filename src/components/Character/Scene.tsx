@@ -49,6 +49,20 @@ const Scene = () => {
       renderer.toneMappingExposure = 1;
       canvasDiv.current.appendChild(renderer.domElement);
 
+      // A GPU/driver crash can drop the WebGL context mid-session (seen on
+      // some Chrome + hybrid-GPU laptop setups). Recover by reloading once
+      // the browser restores the context, instead of leaving a dead canvas.
+      const handleContextLost = (event: Event) => {
+        event.preventDefault();
+        console.warn("3D character: WebGL context lost (likely a GPU driver issue).");
+      };
+      const handleContextRestored = () => {
+        console.warn("3D character: WebGL context restored, reloading to rebuild the scene.");
+        window.location.reload();
+      };
+      renderer.domElement.addEventListener("webglcontextlost", handleContextLost, false);
+      renderer.domElement.addEventListener("webglcontextrestored", handleContextRestored, false);
+
       const camera = new THREE.PerspectiveCamera(14.5, aspect, 0.1, 1000);
       camera.position.z = 10;
       camera.position.set(0, 13.1, 24.7);
@@ -74,12 +88,20 @@ const Scene = () => {
           scene.add(character);
           headBone = character.getObjectByName("spine006") || null;
           screenLight = character.getObjectByName("screenlight") || null;
+          let revealed = false;
+          const revealCharacter = () => {
+            if (revealed) return;
+            revealed = true;
+            light.turnOnLights();
+            animations.startIntro();
+          };
           progress.loaded().then(() => {
-            setTimeout(() => {
-              light.turnOnLights();
-              animations.startIntro();
-            }, 2500);
+            setTimeout(revealCharacter, 2500);
           });
+          // Failsafe: if the loading-progress promise never resolves for
+          // any reason, still reveal the character instead of leaving it
+          // lit at zero intensity (looks fully black) forever.
+          setTimeout(revealCharacter, 8000);
           window.addEventListener("resize", () =>
             handleResize(renderer, camera, canvasDiv, character)
           );
@@ -141,6 +163,8 @@ const Scene = () => {
         clearTimeout(debounce);
         scene.clear();
         renderer.dispose();
+        renderer.domElement.removeEventListener("webglcontextlost", handleContextLost);
+        renderer.domElement.removeEventListener("webglcontextrestored", handleContextRestored);
         window.removeEventListener("resize", () =>
           handleResize(renderer, camera, canvasDiv, character!)
         );
