@@ -207,6 +207,8 @@
 .what-content-in {
   height: 100%;
   overflow: hidden;
+  box-sizing: border-box;
+  padding-bottom: 40px;
 }
 .what-content-in h5 {
   font-weight: 300;
