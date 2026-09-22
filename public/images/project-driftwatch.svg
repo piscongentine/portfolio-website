@@ -1,0 +1,57 @@
+<svg viewBox="0 0 800 600" width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="glow1" cx="80%" cy="10%" r="60%">
+      <stop offset="0%" stop-color="#7f40ff" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#7f40ff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="bar1" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#5a2fd6"/>
+      <stop offset="100%" stop-color="#c2a4ff"/>
+    </linearGradient>
+    <linearGradient id="lidGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#c2a4ff"/>
+      <stop offset="100%" stop-color="#7f40ff"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="600" fill="#0b080c"/>
+  <rect width="800" height="600" fill="url(#glow1)"/>
+
+  <rect x="40" y="40" width="720" height="520" rx="18" fill="#141018" stroke="#2a2432" stroke-width="1.5"/>
+
+  <circle cx="90" cy="76" r="5" fill="#7f40ff"/>
+  <circle cx="112" cy="76" r="5" fill="#3a3340"/>
+  <circle cx="134" cy="76" r="5" fill="#3a3340"/>
+  <rect x="620" y="66" width="100" height="20" rx="10" fill="#1f1a26" stroke="#3a3340"/>
+
+  <!-- Feast feature store -->
+  <g>
+    <ellipse cx="135" cy="185" rx="34" ry="12" fill="#2a2140"/>
+    <rect x="101" y="130" width="68" height="55" fill="#2a2140"/>
+    <ellipse cx="135" cy="130" rx="34" ry="12" fill="url(#lidGrad)"/>
+    <rect x="112" y="152" width="46" height="6" rx="3" fill="#4a3d66"/>
+    <rect x="112" y="164" width="32" height="6" rx="3" fill="#4a3d66"/>
+  </g>
+
+  <!-- Drift chart: metric rising past the alert threshold -->
+  <line x1="225" y1="170" x2="700" y2="170" stroke="#3a3340" stroke-width="2" stroke-dasharray="7 7"/>
+  <polyline points="230,250 280,246 330,252 380,244 430,224 480,200 530,176 580,146"
+    fill="none" stroke="url(#bar1)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="580" cy="146" r="17" fill="#d29bff" opacity="0.22"/>
+  <circle cx="580" cy="146" r="7" fill="#d29bff"/>
+
+  <!-- Live batches: clean, then flagged for drift -->
+  <line x1="80" y1="500" x2="614" y2="500" stroke="#3a3340" stroke-width="1.5"/>
+  <rect x="90"  y="430" width="30" height="70" rx="6" fill="#4a2f8f"/>
+  <rect x="134" y="430" width="30" height="70" rx="6" fill="#4a2f8f"/>
+  <rect x="178" y="430" width="30" height="70" rx="6" fill="#4a2f8f"/>
+  <rect x="222" y="488" width="30" height="12" rx="4" fill="#4a2f8f"/>
+  <rect x="266" y="430" width="30" height="70" rx="6" fill="url(#bar1)"/>
+  <rect x="310" y="430" width="30" height="70" rx="6" fill="url(#bar1)"/>
+  <rect x="354" y="430" width="30" height="70" rx="6" fill="url(#bar1)"/>
+  <rect x="398" y="497" width="30" height="3"  rx="1.5" fill="url(#bar1)"/>
+  <rect x="442" y="430" width="30" height="70" rx="6" fill="url(#bar1)"/>
+  <rect x="486" y="430" width="30" height="70" rx="6" fill="url(#bar1)"/>
+  <rect x="530" y="430" width="30" height="70" rx="6" fill="url(#bar1)"/>
+  <rect x="574" y="430" width="30" height="70" rx="6" fill="url(#bar1)"/>
+</svg>

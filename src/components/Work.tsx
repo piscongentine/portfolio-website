@@ -50,6 +50,15 @@ const projects = [
     description:
       "An early-stage, ongoing research project exploring a domain-specific chatbot that offers thyroid diagnostic insight and medical examination guidance from user inputs. Scoping a self-reliant domain knowledge base for personalised healthcare assistance and test report interpretation.",
   },
+  {
+    name: "DriftWatch",
+    category: "MLOps / Drift Monitoring",
+    tools: "Python, Feast, Evidently",
+    link: "https://github.com/piscongentine/driftwatch",
+    image: "/images/project-driftwatch.svg",
+    description:
+      'Closes the gap between training a model and trusting it in production. DriftWatch wires a Feast feature store, a failure-prediction model and Evidently\'s drift detection into one working loop, training on synthetic sensor data (temperature, vibration, humidity) and checking every live batch against it so degrading sensors get caught before they silently wreck predictions. Runs entirely on a laptop with no cloud account or paid key, ships its own monitoring dashboard, and is backed by 150 tests across five Python versions, plus a 20-issue "Issue Lab" of reproduced open-source bugs for contribution practice.',
+  },
 ];
 
 const Work = () => {
